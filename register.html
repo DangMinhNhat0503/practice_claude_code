@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#090A14',
+                            card: '#0F1222',
+                            border: '#1E2236',
+                            muted: '#2A2F4A',
+                        },
+                        primary: '#DF6B33',
+                        primaryHover: '#C85B28',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #090A14; }
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px #0F1222 inset;
+            -webkit-text-fill-color: #E2E8F0;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 py-10 font-inter text-slate-200">
+
+    <div class="w-full max-w-md">
+
+        <!-- Logo / Brand -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 mb-4">
+                <i data-lucide="user-plus" class="w-7 h-7 text-primary"></i>
+            </div>
+            <h1 class="font-poppins font-extrabold text-3xl text-white tracking-tight">Create Account</h1>
+            <p class="text-slate-400 mt-1 text-sm">Join us and get started</p>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-dark-card border border-dark-border rounded-2xl p-6 sm:p-8 shadow-2xl shadow-black/50">
+
+            <!-- Form -->
+            <form id="registerForm" class="space-y-4" novalidate>
+
+                <!-- Full Name -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5" for="name">Full Name <span class="text-red-400">*</span></label>
+                    <div class="relative">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </span>
+                        <input
+                            id="name"
+                            type="text"
+                            placeholder="John Doe"
+                            class="w-full bg-dark-bg border border-dark-border rounded-xl py-3 pl-10 pr-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                        >
+                    </div>
+                    <p id="nameError" class="hidden text-xs text-red-400 mt-1.5 flex items-center gap-1">
+                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                        <span></span>
+                    </p>
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5" for="email">Email <span class="text-red-400">*</span></label>
+                    <div class="relative">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                        </span>
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="you@example.com"
+                            class="w-full bg-dark-bg border border-dark-border rounded-xl py-3 pl-10 pr-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                        >
+                    </div>
+                    <p id="emailError" class="hidden text-xs text-red-400 mt-1.5 flex items-center gap-1">
+                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                        <span></span>
+                    </p>
+                </div>
+
+                <!-- Phone -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5" for="phone">Phone <span class="text-slate-500 font-normal">(optional)</span></label>
+                    <div class="relative">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                        </span>
+                        <input
+                            id="phone"
+                            type="tel"
+                            placeholder="0123456789"
+                            maxlength="10"
+                            class="w-full bg-dark-bg border border-dark-border rounded-xl py-3 pl-10 pr-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                        >
+                    </div>
+                    <p id="phoneError" class="hidden text-xs text-red-400 mt-1.5 flex items-center gap-1">
+                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                        <span></span>
+                    </p>
+                </div>
+
+                <!-- Gender -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5">Gender <span class="text-slate-500 font-normal">(optional)</span></label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 cursor-pointer select-none">
+                            <input type="radio" name="gender" value="male" class="w-4 h-4 border-dark-border bg-dark-bg accent-primary cursor-pointer">
+                            <span class="text-sm text-slate-400">Male</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer select-none">
+                            <input type="radio" name="gender" value="female" class="w-4 h-4 border-dark-border bg-dark-bg accent-primary cursor-pointer">
+                            <span class="text-sm text-slate-400">Female</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer select-none">
+                            <input type="radio" name="gender" value="other" class="w-4 h-4 border-dark-border bg-dark-bg accent-primary cursor-pointer">
+                            <span class="text-sm text-slate-400">Other</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5" for="address">Address <span class="text-slate-500 font-normal">(optional)</span></label>
+                    <div class="relative">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        </span>
+                        <input
+                            id="address"
+                            type="text"
+                            placeholder="123 Main St, City"
+                            class="w-full bg-dark-bg border border-dark-border rounded-xl py-3 pl-10 pr-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                        >
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5" for="password">Password <span class="text-red-400">*</span></label>
+                    <div class="relative">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                            <i data-lucide="key-round" class="w-4 h-4"></i>
+                        </span>
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Min. 8 characters"
+                            class="w-full bg-dark-bg border border-dark-border rounded-xl py-3 pl-10 pr-10 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                        >
+                        <button type="button" onclick="togglePassword('password', 'eye-icon')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
+                            <i data-lucide="eye" id="eye-icon" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <p id="passwordError" class="hidden text-xs text-red-400 mt-1.5 flex items-center gap-1">
+                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                        <span></span>
+                    </p>
+                </div>
+
+                <!-- Confirm Password -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5" for="confirmPassword">Confirm Password <span class="text-red-400">*</span></label>
+                    <div class="relative">
+                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                            <i data-lucide="key-round" class="w-4 h-4"></i>
+                        </span>
+                        <input
+                            id="confirmPassword"
+                            type="password"
+                            placeholder="Repeat your password"
+                            class="w-full bg-dark-bg border border-dark-border rounded-xl py-3 pl-10 pr-10 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                        >
+                        <button type="button" onclick="togglePassword('confirmPassword', 'eye-icon-confirm')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
+                            <i data-lucide="eye" id="eye-icon-confirm" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <p id="confirmPasswordError" class="hidden text-xs text-red-400 mt-1.5 flex items-center gap-1">
+                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                        <span></span>
+                    </p>
+                </div>
+
+                <!-- Terms -->
+                <div>
+                    <label class="flex items-start gap-2.5 cursor-pointer select-none">
+                        <input type="checkbox" id="terms" class="w-4 h-4 rounded border-dark-border bg-dark-bg accent-primary cursor-pointer mt-0.5">
+                        <span class="text-sm text-slate-400 leading-snug">I agree to the <a href="#" class="text-primary hover:text-primaryHover transition-colors">Terms of Service</a> and <a href="#" class="text-primary hover:text-primaryHover transition-colors">Privacy Policy</a></span>
+                    </label>
+                    <p id="termsError" class="hidden text-xs text-red-400 mt-1.5 flex items-center gap-1">
+                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                        <span></span>
+                    </p>
+                </div>
+
+                <!-- Submit -->
+                <button
+                    type="submit"
+                    class="w-full bg-primary hover:bg-primaryHover text-white font-semibold font-poppins text-base py-3 rounded-xl transition-colors duration-200 shadow-lg shadow-primary/20 mt-2"
+                >
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Back to login -->
+            <p class="text-center text-sm text-slate-400 mt-6">
+                Already have an account?
+                <a href="login.html" class="text-primary hover:text-primaryHover transition-colors font-medium">Sign in</a>
+            </p>
+
+        </div>
+
+        <!-- Footer -->
+        <p class="text-center text-xs text-slate-600 mt-6">
+            By creating an account, you agree to our
+            <a href="#" class="text-slate-500 hover:text-primary transition-colors">Terms of Service</a>
+            &
+            <a href="#" class="text-slate-500 hover:text-primary transition-colors">Privacy Policy</a>
+        </p>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function togglePassword(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+
+        function setFieldError(fieldId, errorId, message) {
+            const input = document.getElementById(fieldId);
+            const errorEl = document.getElementById(errorId);
+            if (!input || !errorEl) return;
+            input.classList.add('border-red-400', 'focus:border-red-400', 'focus:ring-red-400');
+            input.classList.remove('border-dark-border', 'focus:border-primary', 'focus:ring-primary');
+            errorEl.querySelector('span').textContent = message;
+            errorEl.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function clearFieldError(fieldId, errorId) {
+            const input = document.getElementById(fieldId);
+            const errorEl = document.getElementById(errorId);
+            if (!input || !errorEl) return;
+            input.classList.remove('border-red-400', 'focus:border-red-400', 'focus:ring-red-400');
+            input.classList.add('border-dark-border', 'focus:border-primary', 'focus:ring-primary');
+            errorEl.classList.add('hidden');
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function isValidPhone(phone) {
+            if (!phone) return true;
+            return /^\d{10}$/.test(phone);
+        }
+
+        const fields = ['name', 'email', 'phone', 'password', 'confirmPassword'];
+        fields.forEach(function (id) {
+            document.getElementById(id).addEventListener('input', function () {
+                clearFieldError(id, id + 'Error');
+            });
+        });
+
+        document.getElementById('terms').addEventListener('change', function () {
+            clearFieldError('terms', 'termsError');
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const terms = document.getElementById('terms');
+            let valid = true;
+
+            if (!name.value.trim()) {
+                setFieldError('name', 'nameError', 'Full name is required');
+                valid = false;
+            } else {
+                clearFieldError('name', 'nameError');
+            }
+
+            if (!email.value.trim()) {
+                setFieldError('email', 'emailError', 'Email is required');
+                valid = false;
+            } else if (!isValidEmail(email.value.trim())) {
+                setFieldError('email', 'emailError', 'Invalid email address');
+                valid = false;
+            } else {
+                clearFieldError('email', 'emailError');
+            }
+
+            if (phone.value && !isValidPhone(phone.value.trim())) {
+                setFieldError('phone', 'phoneError', 'Phone must be exactly 10 digits');
+                valid = false;
+            } else {
+                clearFieldError('phone', 'phoneError');
+            }
+
+            if (!password.value.trim()) {
+                setFieldError('password', 'passwordError', 'Password is required');
+                valid = false;
+            } else if (password.value.length < 8) {
+                setFieldError('password', 'passwordError', 'Password must be at least 8 characters');
+                valid = false;
+            } else {
+                clearFieldError('password', 'passwordError');
+            }
+
+            if (!confirmPassword.value.trim()) {
+                setFieldError('confirmPassword', 'confirmPasswordError', 'Please confirm your password');
+                valid = false;
+            } else if (confirmPassword.value !== password.value) {
+                setFieldError('confirmPassword', 'confirmPasswordError', 'Passwords do not match');
+                valid = false;
+            } else {
+                clearFieldError('confirmPassword', 'confirmPasswordError');
+            }
+
+            if (!terms.checked) {
+                const errorEl = document.getElementById('termsError');
+                errorEl.querySelector('span').textContent = 'You must agree to the terms and conditions';
+                errorEl.classList.remove('hidden');
+                lucide.createIcons();
+                valid = false;
+            } else {
+                clearFieldError('terms', 'termsError');
+            }
+
+            if (valid) {
+                this.submit();
+            }
+        });
+    </script>
+
+</body>
+</html>
