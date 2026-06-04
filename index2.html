@@ -201,6 +201,8 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
+        iframe { border: none; border-radius: inherit; }
     </style>
 </head>
 <body class="font-body antialiased">
@@ -289,16 +291,30 @@
 
                     <!-- Right Column -->
                     <div class="lg:col-span-2 flex justify-center fade-up">
-                        <div class="hero-visual bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 w-full max-w-sm aspect-square flex flex-col items-center justify-center relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-br from-purple-accent/20 to-[#DF6B33]/20 rounded-2xl"></div>
-                            <div class="text-8xl relative z-10 mb-4">🎵</div>
-                            <h3 class="font-heading font-bold text-xl text-white/90 relative z-10 text-center px-4 mb-2">Waka Waka (This Time for Africa)</h3>
-                            <p class="font-heading font-semibold text-sm text-[#F4A261] relative z-10 mb-4"> Shakira</p>
-                            <a href="https://www.youtube.com/results?search_query=shakira+waka+waka" target="_blank" rel="noopener noreferrer"
-                               class="btn-primary text-white font-bold px-6 py-2.5 rounded-lg inline-flex items-center gap-2 text-sm relative z-10">
-                                <i data-lucide="music" class="w-4 h-4"></i>
-                                Nghe Ngay
-                            </a>
+                        <div class="hero-visual bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 w-full max-w-sm overflow-hidden relative">
+                            <div class="absolute inset-0 bg-gradient-to-br from-purple-accent/20 to-[#DF6B33]/20"></div>
+
+                            <!-- YouTube-style embed -->
+                            <div class="relative w-full aspect-video bg-black">
+                                <iframe
+                                    class="w-full h-full"
+                                    src="https://www.youtube.com/embed/pRpeEdMmmQ0?autoplay=0&rel=0"
+                                    title="Shakira - Waka Waka (This Time for Africa)"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+
+                            <!-- Video info -->
+                            <div class="p-4 relative z-10">
+                                <h3 class="font-heading font-bold text-base text-white mb-0.5">Waka Waka (This Time for Africa)</h3>
+                                <p class="font-heading font-semibold text-sm text-[#F4A261] mb-3"> Shakira</p>
+                                <a href="https://www.youtube.com/results?search_query=dai+dai+shakira" target="_blank" rel="noopener noreferrer"
+                                   class="btn-primary text-white font-bold px-5 py-2.5 rounded-lg inline-flex items-center gap-2 text-xs">
+                                    <i data-lucide="music" class="w-3.5 h-3.5"></i>
+                                    Nghe Nhiều Bài Khác
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
