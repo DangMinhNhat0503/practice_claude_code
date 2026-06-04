@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Cup - Trang xem miễn phí các trận đấu World Cup 2026</title>
+    <meta name="description" content="Miễn phí hoàn toàn các trận bóng đá với bình luận viên chuyên nghiệp, hài hước, đồng thời có các event giữa các trận đấu">
+    <meta property="og:title" content="World Cup - Videos chất lượng cao">
+    <meta property="og:description" content="Trực tuyến các trận đấu theo thời gian thực, video xem lại cho các trận đấu đã diễn ra, hoàn toàn miễn phí">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#ba14d7">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'main-blue': '#0d68c5',
+                        'card-green': '#20cb48',
+                        'card-red': '#df0c34',
+                        'border-color': '#1F2030',
+                        primary: '#DF6B33',
+                        'primary-hover': '#C55A28',
+                        'text-secondary': '#A0A0B0',
+                        accent: '#F4A261',
+                        'purple-accent': '#ba14d7',
+                        'purple-light': '#e040fb',
+                    },
+                    fontFamily: {
+                        heading: ['Plus Jakarta Sans', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #060e1a;
+            color: #FFFFFF;
+            margin: 0;
+        }
+
+        .bg-slider {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .bg-slide.active {
+            opacity: 1;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #DF6B33, #F4A261);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .purple-gradient-text {
+            background: linear-gradient(135deg, #ba14d7, #e040fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover {
+            transition: border-color 300ms, transform 300ms, box-shadow 300ms;
+        }
+        .card-hover:hover {
+            border-color: #DF6B33;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .btn-primary {
+            background-color: #DF6B33;
+            transition: background-color 200ms, transform 150ms;
+        }
+        .btn-primary:hover { background-color: #C55A28; }
+        .btn-primary:active { transform: scale(0.98); }
+
+        .btn-purple {
+            background: linear-gradient(135deg, #ba14d7, #e040fb);
+            transition: opacity 200ms, transform 150ms;
+        }
+        .btn-purple:hover { opacity: 0.9; }
+        .btn-purple:active { transform: scale(0.98); }
+
+        .btn-outline {
+            border: 2px solid rgba(255,255,255,0.4);
+            transition: border-color 200ms, background-color 200ms;
+        }
+        .btn-outline:hover {
+            border-color: #DF6B33;
+            background-color: rgba(223, 107, 51, 0.15);
+        }
+
+        .hero-visual {
+            box-shadow: 0 0 80px rgba(186, 20, 215, 0.4), 0 0 40px rgba(223, 107, 51, 0.2);
+        }
+
+        .nav-scrolled {
+            background: rgba(6, 14, 26, 0.97) !important;
+            border-bottom-color: rgba(255,255,255,0.12) !important;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 600ms ease-out, transform 600ms ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        details summary::-webkit-details-marker { display: none; }
+        details summary .faq-chevron {
+            transition: transform 300ms;
+        }
+        details[open] summary .faq-chevron {
+            transform: rotate(180deg);
+        }
+
+        .counter { font-variant-numeric: tabular-nums; }
+
+        .hero-glow {
+            background: radial-gradient(ellipse at 60% 40%, rgba(186, 20, 215, 0.2) 0%, transparent 60%),
+                        radial-gradient(ellipse at 30% 70%, rgba(223, 107, 51, 0.15) 0%, transparent 50%);
+        }
+
+        .card-green-glow { box-shadow: 0 0 30px rgba(32, 203, 72, 0.2); }
+        .card-red-glow { box-shadow: 0 0 30px rgba(223, 12, 52, 0.2); }
+
+        .schedule-node {
+            position: relative;
+        }
+        .schedule-node::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 28px;
+            width: 20px;
+            height: 2px;
+            background: rgba(255,255,255,0.2);
+        }
+        .schedule-node::after {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,255,255,0.1);
+        }
+        .schedule-node:last-child::after { display: none; }
+        .schedule-node::after { display: block; }
+
+        .schedule-branch::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 50%;
+            width: 20px;
+            height: 2px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .trophy-shine {
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="font-body antialiased">
+
+    <!-- Background Slider -->
+    <div class="bg-slider" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&q=80&auto=format&fit=crop" alt="" class="bg-slide active">
+        <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1920&q=80&auto=format&fit=crop" alt="" class="bg-slide">
+        <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=1920&q=80&auto=format&fit=crop" alt="" class="bg-slide">
+        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1920&q=80&auto=format&fit=crop" alt="" class="bg-slide">
+        <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=1920&q=80&auto=format&fit=crop" alt="" class="bg-slide">
+        <!-- Overlay for readability -->
+        <div class="absolute inset-0 bg-black/55"></div>
+    </div>
+
+    <!-- ======================== 1. NAVIGATION ======================== -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: rgba(6, 14, 26, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.08);">
+        <nav class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#" class="font-heading font-extrabold text-[22px] text-white leading-none flex items-center gap-2">
+                <span class="text-2xl">🏆</span>
+                <span>World<span class="text-[#F4A261]">Cup</span></span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#schedule" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Lịch thi đấu</a>
+                <a href="#benefits" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Lợi ích</a>
+                <a href="#social-proof" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Đánh giá</a>
+                <a href="#faq" class="text-white/80 hover:text-white text-sm font-medium transition-colors">FAQ</a>
+                <a href="#cta" class="btn-primary text-white text-sm font-semibold px-5 py-2.5 rounded-lg">Xem Ngay</a>
+            </div>
+
+            <button id="menuBtn" class="md:hidden text-white p-2" aria-label="Mở menu" aria-expanded="false">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-[#060e1a]/97 backdrop-blur-md border-t border-white/10">
+            <div class="px-4 py-4 flex flex-col gap-4">
+                <a href="#schedule" class="text-white/80 hover:text-white text-sm font-medium py-2 transition-colors mobile-link">Lịch thi đấu</a>
+                <a href="#benefits" class="text-white/80 hover:text-white text-sm font-medium py-2 transition-colors mobile-link">Lợi ích</a>
+                <a href="#social-proof" class="text-white/80 hover:text-white text-sm font-medium py-2 transition-colors mobile-link">Đánh giá</a>
+                <a href="#faq" class="text-white/80 hover:text-white text-sm font-medium py-2 transition-colors mobile-link">FAQ</a>
+                <a href="#cta" class="btn-primary text-white text-sm font-semibold px-5 py-3 rounded-lg text-center mt-2 mobile-link">Xem Ngay</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ======================== 2. HERO SECTION ======================== -->
+        <section id="hero" class="relative pt-16 overflow-hidden">
+            <div class="hero-glow absolute inset-0 pointer-events-none"></div>
+            <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
+                <div class="grid lg:grid-cols-5 gap-10 lg:gap-14 items-center">
+                    <!-- Left Column -->
+                    <div class="lg:col-span-3 fade-up">
+                        <span class="inline-flex items-center gap-2 text-sm font-semibold text-white bg-white/15 border border-white/20 rounded-full px-4 py-1.5 mb-6">
+                            <span>🌍</span> World Cup 2026 — Miễn Phí 100%
+                        </span>
+
+                        <h1 class="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight mb-6">
+                            Xem Các Trận Đấu<br><span class="purple-gradient-text">Đỉnh Cao Miễn Phí</span>
+                        </h1>
+
+                        <p class="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
+                            Không giật lag. Không quảng cáo. Bình luận viên chuyên nghiệp và hài hước. Trực tiếp mọi trận đấu World Cup 2026 hoàn toàn miễn phí.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row gap-3 mb-8">
+                            <a href="#cta" class="btn-purple text-white font-bold px-7 py-3.5 rounded-lg inline-flex items-center justify-center gap-2 text-sm shadow-lg shadow-purple-accent/30">
+                                <i data-lucide="play" class="w-4 h-4"></i>
+                                Xem Trận Đấu Ngay
+                            </a>
+                            <a href="#schedule" class="btn-outline text-white font-medium px-7 py-3.5 rounded-lg inline-flex items-center justify-center gap-2 text-sm">
+                                <i data-lucide="calendar-days" class="w-4 h-4"></i>
+                                Lịch Thi Đấu
+                            </a>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-4 text-sm text-white/70">
+                            <span class="flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4 text-[#20cb48]"></i> Miễn phí 100%</span>
+                            <span class="flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4 text-[#20cb48]"></i> Không quảng cáo</span>
+                            <span class="flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4 text-[#20cb48]"></i> HD chất lượng cao</span>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="lg:col-span-2 flex justify-center fade-up">
+                        <div class="hero-visual bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 w-full max-w-sm aspect-square flex flex-col items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-purple-accent/20 to-[#DF6B33]/20 rounded-2xl"></div>
+                            <div class="text-8xl relative z-10 mb-4">🎵</div>
+                            <h3 class="font-heading font-bold text-xl text-white/90 relative z-10 text-center px-4 mb-2">Waka Waka (This Time for Africa)</h3>
+                            <p class="font-heading font-semibold text-sm text-[#F4A261] relative z-10 mb-4"> Shakira</p>
+                            <a href="https://www.youtube.com/results?search_query=shakira+waka+waka" target="_blank" rel="noopener noreferrer"
+                               class="btn-primary text-white font-bold px-6 py-2.5 rounded-lg inline-flex items-center gap-2 text-sm relative z-10">
+                                <i data-lucide="music" class="w-4 h-4"></i>
+                                Nghe Ngay
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== 3. PROBLEM STATEMENT ======================== -->
+        <section class="py-16 sm:py-20 lg:py-[80px] bg-black/60">
+            <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="font-heading font-bold text-2xl sm:text-3xl lg:text-[36px] text-center mb-4 fade-up">Bạn Đang Gặp Những Vấn Đề Gì?</h2>
+                <p class="text-white/70 text-center text-base sm:text-lg max-w-2xl mx-auto mb-14 leading-relaxed fade-up">
+                    Người yêu bóng đá Việt Nam đang phải đối mặt với vô số phiền toái khi tìm nơi xem World Cup
+                </p>
+
+                <div class="grid sm:grid-cols-2 gap-5 sm:gap-6">
+                    <div class="bg-[#df0c34]/80 backdrop-blur-sm border border-white/10 rounded-xl p-6 card-hover fade-up">
+                        <div class="w-14 h-14 bg-white/15 rounded-xl flex items-center justify-center mb-5">
+                            <i data-lucide="popcorn" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg mb-3">Quảng cáo chèn giữa trận đấu</h3>
+                        <p class="text-white/80 text-sm leading-relaxed">Đang xem penalty quyết định thì bị cắt để xem quảng cáo 30 giây. Tâm trạng như ngồi trên đurô.</p>
+                    </div>
+
+                    <div class="bg-[#df0c34]/80 backdrop-blur-sm border border-white/10 rounded-xl p-6 card-hover fade-up">
+                        <div class="w-14 h-14 bg-white/15 rounded-xl flex items-center justify-center mb-5">
+                            <i data-lucide="wifi-off" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg mb-3">Giật lag, mất kết nối liên tục</h3>
+                        <p class="text-white/80 text-sm leading-relaxed">Trận đấu hay nhất thế giới mà xem như bị tra tấn. Load 5 phút, giật 3 giây, lặp đi lặp lại đến hết trận.</p>
+                    </div>
+
+                    <div class="bg-[#df0c34]/80 backdrop-blur-sm border border-white/10 rounded-xl p-6 card-hover fade-up">
+                        <div class="w-14 h-14 bg-white/15 rounded-xl flex items-center justify-center mb-5">
+                            <i data-lucide="shield-off" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg mb-3">Virus, malware khi tìm link xem</h3>
+                        <p class="text-white/80 text-sm leading-relaxed">Click vào link "miễn phí" xong máy tính nhiễm đầy. Quảng cáo 18+ nhảy đầy màn hình, không tắt được.</p>
+                    </div>
+
+                    <div class="bg-[#df0c34]/80 backdrop-blur-sm border border-white/10 rounded-xl p-6 card-hover fade-up">
+                        <div class="w-14 h-14 bg-white/15 rounded-xl flex items-center justify-center mb-5">
+                            <i data-lucide="volume-x" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg mb-3">Bình luận viên nhàm chán hoặc không có tiếng Việt</h3>
+                        <p class="text-white/80 text-sm leading-relaxed">Nghe bình luận tiếng Anh không hiểu gì, hoặc tiếng Việt thì buồn ngủ. Thiếu cảm xúc, thiếu phấn khích.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== 4. SOLUTION SECTION ======================== -->
+        <section class="py-16 sm:py-20 lg:py-[80px]">
+            <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                    <div class="fade-up">
+                        <span class="inline-flex items-center gap-2 text-sm font-semibold text-white bg-white/15 border border-white/20 rounded-full px-4 py-1.5 mb-6">
+                            <span>💡</span> Giải pháp cho bạn
+                        </span>
+                        <h2 class="font-heading font-extrabold text-2xl sm:text-3xl lg:text-[36px] leading-tight mb-6">
+                            Trang xem World Cup <span class="purple-gradient-text">hoàn toàn miễn phí</span>, không giới hạn
+                        </h2>
+                        <p class="text-white/80 text-base leading-relaxed mb-8">
+                            Chúng tôi tổng hợp tất cả các trận đấu World Cup 2026 vào một nơi duy nhất. Chất lượng HD, không quảng cáo, bình luận tiếng Việt sôi nổi. Tất cả hoàn toàn miễn phí — không cần đăng ký, không cần tài khoản.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-[#20cb48]/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i data-lucide="check" class="w-4 h-4 text-[#20cb48]"></i>
+                                </div>
+                                <div>
+                                    <p class="font-heading font-semibold text-sm">Trực tiếp mọi trận đấu</p>
+                                    <p class="text-white/60 text-sm">Từ vòng loại đến chung kết, không bỏ lỡ bất kỳ trận nào.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-[#20cb48]/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i data-lucide="check" class="w-4 h-4 text-[#20cb48]"></i>
+                                </div>
+                                <div>
+                                    <p class="font-heading font-semibold text-sm">Video xem lại sau trận</p>
+                                    <p class="text-white/60 text-sm">Bận việc? Không sao, xem lại full trận bất cứ lúc nào.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 bg-[#20cb48]/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i data-lucide="check" class="w-4 h-4 text-[#20cb48]"></i>
+                                </div>
+                                <div>
+                                    <p class="font-heading font-semibold text-sm">Events & phân tích chuyên sâu</p>
+                                    <p class="text-white/60 text-sm">Highlights, phân tích chiến thuật, thống kê giữa các trận đấu.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#cta" class="btn-purple text-white font-bold px-8 py-3.5 rounded-lg inline-flex items-center gap-2 mt-8 text-sm shadow-lg shadow-purple-accent/30">
+                            Bắt Đầu Xem Ngay
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                    <div class="fade-up">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 p-6 sm:p-8 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-purple-accent/20 rounded-full blur-3xl"></div>
+                            <div class="relative">
+                                <div class="text-6xl text-center mb-4">📺</div>
+                                <h3 class="font-heading font-bold text-xl text-center mb-2">World Cup 2026</h3>
+                                <p class="text-white/60 text-sm text-center mb-6">Trực tiếp • Miễn phí • Không giới hạn</p>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between bg-white/5 rounded-lg px-4 py-3">
+                                        <span class="text-sm text-white/80">Trận đấu đang live</span>
+                                        <span class="flex items-center gap-1.5 text-[#20cb48] text-sm font-semibold">
+                                            <span class="w-2 h-2 bg-[#20cb48] rounded-full animate-pulse"></span> 3 đang diễn ra
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-white/5 rounded-lg px-4 py-3">
+                                        <span class="text-sm text-white/80">Trận hôm nay</span>
+                                        <span class="text-white text-sm font-semibold">8 trận</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-white/5 rounded-lg px-4 py-3">
+                                        <span class="text-sm text-white/80">Người đang xem</span>
+                                        <span class="text-[#F4A261] text-sm font-bold">12,847 online</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== 5. BENEFITS SECTION ======================== -->
+        <section id="benefits" class="py-16 sm:py-20 lg:py-[80px] bg-black/60">
+            <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-14 fade-up">
+                    <h2 class="font-heading font-bold text-2xl sm:text-3xl lg:text-[36px] mb-4">Bạn Nhận Được Gì?</h2>
+                    <p class="text-white/70 text-base sm:text-lg max-w-xl mx-auto">Trải nghiệm xem bóng đá đỉnh cao nhất, hoàn toàn miễn phí.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                    <!-- Benefit 1 -->
+                    <div class="bg-[#20cb48]/10 backdrop-blur-sm border border-[#20cb48]/20 rounded-xl p-6 card-hover fade-up">
+                        <div class="w-14 h-14 bg-[#20cb48]/20 rounded-xl flex items-center justify-center mb-5">
+                            <i data-lucide="hd" class="w-7 h-7 text-[#20cb48]"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg mb-3">Chất Lượng HD & 4K</h3>
+                        <p class="text-white/70 text-sm leading-relaxed">Hình ảnh sắc nét, màu sắc chân thực. Cảm giác như đang ngồi ở sân vận động. Tùy chọn chất lượng phù hợp mọi tốc độ mạng.</p>
+                    </div>
+
+                    <!-- Benefit 2 -->
+                    <div class="bg-[#20cb48]/10 backdrop-blur-sm border border-[#20cb48]/20 rounded-xl p-6 card-hover fade-up">
+                        <div class="w-14 h-14 bg-[#20cb48]/20 rounded-xl flex items-center justify-center mb-5">
+                            <i data-lucide="zap" class="w-7 h-7 text-[#20cb48]"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg mb-3">Không Giật Lag</h3>
+                        <p class="text-white/70 text-sm leading-relaxed">Server mạnh mẽ, đường truyền ổn định. CDN toàn cầu đảm bảo video chạy mượt mà dù mạng yếu. Tự động chọn server gần nhất.</p>
+                    </div>
+
+                    <!-- Benefit 3 -->
+                    <div class="bg-[#20cb48]/10 backdrop-blur-sm border border-[#20cb48]/20 rounded-xl p-6 card-hover fade-up">
+                        <div class="w-14 h-14 bg-[#20cb48]/20 rounded-xl flex items-center justify-center mb-5">
+                            <i data-lucide="ban" class="w-7 h-7 text-[#20cb48]"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg mb-3">Không Quảng Cáo</h3>
+                        <p class="text-white/70 text-sm leading-relaxed">Không popup, không banner, không quảng cáo chèn giữa trận. Ngồi xuống, thư giãn và tận hưởng trận cầu đỉnh cao.</p>
+                    </div>
+
+                    <!-- Benefit 4 -->
+                    <div class="bg-[#20cb48]/10 backdrop-blur-sm border border-[#20cb48]/20 rounded-xl p-6 card-hover fade-up">
+                        <div class="w-14 h-14 bg-[#20cb48]/20 rounded-xl flex items-center justify-center mb-5">
+                            <i data-lucide="mic" class="w-7 h-7 text-[#20cb48]"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg mb-3">Bình Luận Viên Chuyên Nghiệp</h3>
+                        <p class="text-white/70 text-sm leading-relaxed">Đội ngũ bình luận viên giàu kinh nghiệm, am hiểu bóng đá, giọng đọc truyền cảm hứng. Có cả phiên bản hài hước cho fan cuồng.</p>
+                    </div>
+
+                    <!-- Benefit 5 -->
+                    <div class="bg-[#20cb48]/10 backdrop-blur-sm border border-[#20cb48]/20 rounded-xl p-6 card-hover fade-up">
+                        <div class="w-14 h-14 bg-[#20cb48]/20 rounded-xl flex items-center justify-center mb-5">
+                            <i data-lucide="monitor-play" class="w-7 h-7 text-[#20cb48]"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg mb-3">Xem Lại Mọi Trận Đấu</h3>
+                        <p class="text-white/70 text-sm leading-relaxed">Bỏ lỡ trận đấu? Không vấn đề. Toàn bộ video highlights và full match được lưu lại để xem lại bất cứ khi nào bạn muốn.</p>
+                    </div>
+
+                    <!-- Benefit 6 -->
+                    <div class="bg-[#20cb48]/10 backdrop-blur-sm border border-[#20cb48]/20 rounded-xl p-6 card-hover fade-up">
+                        <div class="w-14 h-14 bg-[#20cb48]/20 rounded-xl flex items-center justify-center mb-5">
+                            <i data-lucide="smartphone" class="w-7 h-7 text-[#20cb48]"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-lg mb-3">Mọi Thiết Bị</h3>
+                        <p class="text-white/70 text-sm leading-relaxed">Điện thoại, tablet, laptop, Smart TV — đều xem được. Đồng bộ trạng thái xem giữa các thiết bị. Không cần cài đặt app.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== 6. SOCIAL PROOF ======================== -->
+        <section id="social-proof" class="py-16 sm:py-20 lg:py-[80px]">
+            <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-14 fade-up">
+                    <h2 class="font-heading font-bold text-2xl sm:text-3xl lg:text-[36px] mb-4">Cộng Đồng Đã Tin Tưởng</h2>
+                    <p class="text-white/70 text-base sm:text-lg">Hàng triệu fan bóng đá đã và đang theo dõi cùng chúng tôi</p>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 fade-up">
+                    <div class="stat-card rounded-xl p-5 sm:p-6 text-center card-hover">
+                        <div class="font-heading font-extrabold text-3xl sm:text-4xl text-[#20cb48] counter" data-target="2400000" data-suffix="+">0</div>
+                        <p class="text-white/60 text-sm mt-1">Người xem trận mở màn</p>
+                    </div>
+                    <div class="stat-card rounded-xl p-5 sm:p-6 text-center card-hover">
+                        <div class="font-heading font-extrabold text-3xl sm:text-4xl text-[#F4A261]">4.9<span class="text-lg">/5</span></div>
+                        <p class="text-white/60 text-sm mt-1">Điểm đánh giá trung bình</p>
+                    </div>
+                    <div class="stat-card rounded-xl p-5 sm:p-6 text-center card-hover">
+                        <div class="font-heading font-extrabold text-3xl sm:text-4xl text-purple-light">99.7<span class="text-lg">%</span></div>
+                        <p class="text-white/60 text-sm mt-1">Uptime server</p>
+                    </div>
+                    <div class="stat-card rounded-xl p-5 sm:p-6 text-center card-hover">
+                        <div class="font-heading font-extrabold text-3xl sm:text-4xl text-[#df0c34]">64</div>
+                        <p class="text-white/60 text-sm mt-1">Trận đấu trực tiếp</p>
+                    </div>
+                </div>
+
+                <!-- Testimonials -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12">
+                    <div class="bg-white/8 backdrop-blur-sm border border-white/10 rounded-xl p-5 card-hover fade-up">
+                        <div class="flex items-center gap-1 mb-3">
+                            <span class="text-[#F4A261]">★★★★★</span>
+                        </div>
+                        <p class="text-white/85 text-sm leading-relaxed mb-4">"Xem World Cup 2022 ở đây, lần đầu không bị quảng cáo làm phiền. Penalty Argentina vs Pháp mà ngồi nguyên cả tiếng không bị cắt đoạn nào. Đỉnh!"</p>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-[#20cb48]/20 rounded-full flex items-center justify-center text-sm">T</div>
+                            <div>
+                                <p class="text-sm font-semibold">Trần Minh Đức</p>
+                                <p class="text-white/40 text-xs">TP.HCM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/8 backdrop-blur-sm border border-white/10 rounded-xl p-5 card-hover fade-up">
+                        <div class="flex items-center gap-1 mb-3">
+                            <span class="text-[#F4A261]">★★★★★</span>
+                        </div>
+                        <p class="text-white/85 text-sm leading-relaxed mb-4">"Bình luận viên ở đây vui lắm, có trận nghe cười đau cả bụng. Giọng anh Thắng đọc penalty mà goosebumps hết cả người. 10 điểm!"</p>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-[#df0c34]/20 rounded-full flex items-center justify-center text-sm">L</div>
+                            <div>
+                                <p class="text-sm font-semibold">Lê Hương Giang</p>
+                                <p class="text-white/40 text-xs">Hà Nội</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/8 backdrop-blur-sm border border-white/10 rounded-xl p-5 card-hover fade-up">
+                        <div class="flex items-center gap-1 mb-3">
+                            <span class="text-[#F4A261]">★★★★★</span>
+                        </div>
+                        <p class="text-white/85 text-sm leading-relaxed mb-4">"Mình ở Úc mà xem vẫn mượt không khác gì ở Việt Nam. Server nước ngoài load nhanh kinh. Đêm nào cũng vào coi highlights, nghiện quá."</p>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-[#ba14d7]/20 rounded-full flex items-center justify-center text-sm">N</div>
+                            <div>
+                                <p class="text-sm font-semibold">Nguyễn Hoàng Nam</p>
+                                <p class="text-white/40 text-xs">Sydney, Úc</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Video Card -->
+                <div class="bg-white/8 backdrop-blur-sm border border-white/15 rounded-2xl p-6 sm:p-8 fade-up card-hover">
+                    <div class="flex flex-col lg:flex-row gap-6 items-center">
+                        <div class="flex-shrink-0 w-full lg:w-72 aspect-video bg-white/10 rounded-xl flex items-center justify-center relative cursor-pointer group" role="button" tabindex="0" aria-label="Xem video giới thiệu">
+                            <span class="text-6xl group-hover:scale-110 transition-transform duration-300">🎬</span>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-16 h-16 bg-[#DF6B33]/80 rounded-full flex items-center justify-center backdrop-blur-sm group-hover:bg-[#DF6B33] transition-colors">
+                                    <i data-lucide="play" class="w-7 h-7 text-white ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1 text-center lg:text-left">
+                            <h3 class="font-heading font-bold text-xl mb-2">Xem lại trận Chung kết World Cup 2022</h3>
+                            <p class="text-white/70 text-sm leading-relaxed mb-4">Argentina vs Pháp — trận chung kết được coi là hay nhất lịch sử World Cup. Messi cùng đội tuyển Argentina giành cup vàng lịch sử sau loạt penalty nghẹt thở.</p>
+                            <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
+                                <span class="text-xs font-medium px-3 py-1.5 rounded-full bg-white/10 text-white/70">Argentina</span>
+                                <span class="text-xs font-medium px-3 py-1.5 rounded-full bg-white/10 text-white/70">Pháp</span>
+                                <span class="text-xs font-medium px-3 py-1.5 rounded-full bg-white/10 text-white/70">Chung kết</span>
+                                <span class="text-xs font-medium px-3 py-1.5 rounded-full bg-[#df0c34]/20 text-[#df0c34]">4K Ultra HD</span>
+                                <span class="text-xs font-medium px-3 py-1.5 rounded-full bg-[#20cb48]/20 text-[#20cb48]">Vietsub</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== 7. SCHEDULE SECTION ======================== -->
+        <section id="schedule" class="py-16 sm:py-20 lg:py-[80px] bg-black/60">
+            <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-14 fade-up">
+                    <h2 class="font-heading font-bold text-2xl sm:text-3xl lg:text-[36px] mb-4">Lịch Thi Đấu World Cup 2026</h2>
+                    <p class="text-white/70 text-base sm:text-lg max-w-xl mx-auto">Giải đấu diễn ra từ tháng 6 đến tháng 7 năm 2026 tại Mỹ, Canada và Mexico</p>
+                </div>
+
+                <div class="max-w-3xl mx-auto">
+                    <!-- Vòng bảng -->
+                    <div class="mb-8 fade-up">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="text-2xl">⚽</span>
+                            <div>
+                                <h3 class="font-heading font-bold text-lg">Vòng Bảng</h3>
+                                <p class="text-white/50 text-sm">48 trận • 8 nhóm</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 pl-4 border-l-2 border-white/15">
+                            <div class="bg-white/8 border border-white/10 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 card-hover">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 bg-[#20cb48]/20 rounded-lg flex items-center justify-center text-sm font-bold text-[#20cb48] flex-shrink-0">G1</span>
+                                    <div>
+                                        <p class="font-heading font-semibold text-sm">Argentina vs Brazil</p>
+                                        <p class="text-white/50 text-xs">Nhóm A — Sân MetLife Stadium</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 sm:flex-row">
+                                    <span class="text-white/50 text-xs">11/06/2026 — 02:00</span>
+                                    <span class="bg-[#20cb48]/20 text-[#20cb48] text-xs font-bold px-3 py-1 rounded-full">Sắp diễn ra</span>
+                                </div>
+                            </div>
+                            <div class="bg-white/8 border border-white/10 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 card-hover">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 bg-[#20cb48]/20 rounded-lg flex items-center justify-center text-sm font-bold text-[#20cb48] flex-shrink-0">G2</span>
+                                    <div>
+                                        <p class="font-heading font-semibold text-sm">Pháp vs Đức</p>
+                                        <p class="text-white/50 text-xs">Nhóm B — Sân SoFi Stadium</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 sm:flex-row">
+                                    <span class="text-white/50 text-xs">11/06/2026 — 20:00</span>
+                                    <span class="bg-[#20cb48]/20 text-[#20cb48] text-xs font-bold px-3 py-1 rounded-full">Sắp diễn ra</span>
+                                </div>
+                            </div>
+                            <div class="bg-white/8 border border-white/10 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 card-hover">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 bg-[#df0c34]/20 rounded-lg flex items-center justify-center text-sm font-bold text-[#df0c34] flex-shrink-0">G3</span>
+                                    <div>
+                                        <p class="font-heading font-semibold text-sm">Anh vs Tây Ban Nha</p>
+                                        <p class="text-white/50 text-xs">Nhóm C — Sân AT&T Stadium</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 sm:flex-row">
+                                    <span class="text-white/50 text-xs">12/06/2026 — 02:00</span>
+                                    <span class="bg-[#df0c34]/20 text-[#df0c34] text-xs font-bold px-3 py-1 rounded-full">Sắp diễn ra</span>
+                                </div>
+                            </div>
+                            <div class="bg-white/8 border border-white/10 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 card-hover">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-10 h-10 bg-[#df0c34]/20 rounded-lg flex items-center justify-center text-sm font-bold text-[#df0c34] flex-shrink-0">G4</span>
+                                    <div>
+                                        <p class="font-heading font-semibold text-sm">Bồ Đào Nha vs Hà Lan</p>
+                                        <p class="text-white/50 text-xs">Nhóm D — Sân Rose Bowl</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 sm:flex-row">
+                                    <span class="text-white/50 text-xs">12/06/2026 — 20:00</span>
+                                    <span class="bg-[#df0c34]/20 text-[#df0c34] text-xs font-bold px-3 py-1 rounded-full">Sắp diễn ra</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vòng loại trực tiếp -->
+                    <div class="mb-8 fade-up">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="text-2xl">🏆</span>
+                            <div>
+                                <h3 class="font-heading font-bold text-lg">Vòng Loại Trực Tiếp</h3>
+                                <p class="text-white/50 text-sm">16 đội vào vòng knock-out</p>
+                            </div>
+                        </div>
+                        <div class="grid sm:grid-cols-3 gap-3">
+                            <div class="bg-white/8 border border-white/10 rounded-xl p-4 card-hover text-center">
+                                <p class="text-[#F4A261] text-xs font-bold uppercase tracking-wider mb-2">Vòng 1/16</p>
+                                <p class="font-heading font-semibold text-sm">16 trận</p>
+                                <p class="text-white/50 text-xs mt-1">20–23/06/2026</p>
+                            </div>
+                            <div class="bg-white/8 border border-white/10 rounded-xl p-4 card-hover text-center">
+                                <p class="text-[#F4A261] text-xs font-bold uppercase tracking-wider mb-2">Tứ Kết</p>
+                                <p class="font-heading font-semibold text-sm">8 trận</p>
+                                <p class="text-white/50 text-xs mt-1">26–28/06/2026</p>
+                            </div>
+                            <div class="bg-white/8 border border-white/10 rounded-xl p-4 card-hover text-center">
+                                <p class="text-[#F4A261] text-xs font-bold uppercase tracking-wider mb-2">Bán Kết</p>
+                                <p class="font-heading font-semibold text-sm">4 trận</p>
+                                <p class="text-white/50 text-xs mt-1">01–02/07/2026</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trận Chung Kết -->
+                    <div class="fade-up">
+                        <div class="bg-gradient-to-br from-[#ba14d7]/20 to-[#DF6B33]/20 backdrop-blur-sm border-2 border-[#F4A261]/30 rounded-2xl p-6 sm:p-8 text-center card-hover">
+                            <div class="text-5xl mb-3">🏆</div>
+                            <p class="text-[#F4A261] text-xs font-bold uppercase tracking-widest mb-2">Trận Đấu Cuối Cùng</p>
+                            <h3 class="font-heading font-extrabold text-2xl sm:text-3xl mb-2">CHUNG KẾT WORLD CUP 2026</h3>
+                            <p class="text-white/60 text-sm mb-4">Sân MetLife Stadium, New Jersey — 19/07/2026</p>
+                            <a href="#cta" class="btn-primary text-white font-bold px-8 py-3 rounded-lg inline-flex items-center gap-2 text-sm shadow-lg shadow-primary/30">
+                                <i data-lucide="bell-ring" class="w-4 h-4"></i>
+                                Nhận Thông Báo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== 8. CTA SECTION ======================== -->
+        <section id="cta" class="py-16 sm:py-20 lg:py-[80px]">
+            <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto">
+                    <div class="text-6xl mb-6 fade-up">🏆</div>
+                    <h2 class="font-heading font-extrabold text-2xl sm:text-3xl lg:text-[36px] mb-4 fade-up">
+                        Sẵn Sàng Cùng <span class="purple-gradient-text">120 Triệu</span> Fan Bóng Đá?
+                    </h2>
+                    <p class="text-white/70 text-base sm:text-lg mb-10 leading-relaxed fade-up">
+                        World Cup 2026 đang đến rất gần. Đừng bỏ lỡ khoảnh khắc lịch sử. Tham gia cùng hàng triệu fan trên toàn thế giới ngay hôm nay — hoàn toàn miễn phí.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8 fade-up">
+                        <a href="#" class="btn-purple text-white font-bold px-8 py-4 rounded-lg inline-flex items-center justify-center gap-2 text-base shadow-lg shadow-purple-accent/30">
+                            <i data-lucide="play" class="w-5 h-5"></i>
+                            Xem Trận Đấu Ngay
+                        </a>
+                        <a href="#schedule" class="btn-outline text-white font-semibold px-8 py-4 rounded-lg inline-flex items-center justify-center gap-2 text-base">
+                            <i data-lucide="calendar-days" class="w-5 h-5"></i>
+                            Xem Lịch Thi Đấu
+                        </a>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60 fade-up">
+                        <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-[#20cb48]"></i> An toàn, không virus</span>
+                        <span class="flex items-center gap-1.5"><i data-lucide="credit-card" class="w-4 h-4 text-[#20cb48]"></i> Miễn phí 100%</span>
+                        <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4 text-[#20cb48]"></i> 24/7 hỗ trợ</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== 9. FAQ SECTION ======================== -->
+        <section id="faq" class="py-16 sm:py-20 lg:py-[80px] bg-black/60">
+            <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="font-heading font-bold text-2xl sm:text-3xl lg:text-[36px] text-center mb-14 fade-up">Câu Hỏi Thường Gặp</h2>
+
+                <div class="max-w-2xl mx-auto space-y-3">
+                    <details class="bg-white/8 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden fade-up">
+                        <summary class="flex items-center justify-between cursor-pointer p-5 sm:p-6 gap-4 list-none">
+                            <span class="font-heading font-semibold text-sm sm:text-base pr-4">Xem World Cup ở đây có miễn phí không?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-white/50 flex-shrink-0 faq-chevron"></i>
+                        </summary>
+                        <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+                            <p class="text-white/70 text-sm leading-relaxed">Hoàn toàn miễn phí. Không phí đăng ký, không phí xem, không phí ẩn. Bạn chỉ cần mở trình duyệt và tận hưởng các trận đấu đỉnh cao.</p>
+                        </div>
+                    </details>
+
+                    <details class="bg-white/8 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden fade-up">
+                        <summary class="flex items-center justify-between cursor-pointer p-5 sm:p-6 gap-4 list-none">
+                            <span class="font-heading font-semibold text-sm sm:text-base pr-4">Có quảng cáo không?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-white/50 flex-shrink-0 faq-chevron"></i>
+                        </summary>
+                        <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+                            <p class="text-white/70 text-sm leading-relaxed">Không. Chúng tôi cam kết không chèn bất kỳ quảng cáo nào vào video trận đấu. Không popup, không banner, không quảng cáo video. Trải nghiệm xem hoàn toàn liền mạch.</p>
+                        </div>
+                    </details>
+
+                    <details class="bg-white/8 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden fade-up">
+                        <summary class="flex items-center justify-between cursor-pointer p-5 sm:p-6 gap-4 list-none">
+                            <span class="font-heading font-semibold text-sm sm:text-base pr-4">Chất lượng hình ảnh như thế nào?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-white/50 flex-shrink-0 faq-chevron"></i>
+                        </summary>
+                        <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+                            <p class="text-white/70 text-sm leading-relaxed">Chúng tôi hỗ trợ nhiều mức chất lượng: 360p, 480p, 720p HD, 1080p Full HD và 4K Ultra HD. Hệ thống tự động chọn chất lượng phù hợp với tốc độ mạng của bạn.</p>
+                        </div>
+                    </details>
+
+                    <details class="bg-white/8 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden fade-up">
+                        <summary class="flex items-center justify-between cursor-pointer p-5 sm:p-6 gap-4 list-none">
+                            <span class="font-heading font-semibold text-sm sm:text-base pr-4">Tôi có thể xem lại trận đấu không?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-white/50 flex-shrink-0 faq-chevron"></i>
+                        </summary>
+                        <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+                            <p class="text-white/70 text-sm leading-relaxed">Có. Tất cả các trận đấu đều được lưu lại sau khi kết thúc. Bạn có thể xem lại toàn bộ trận đấu (full match) hoặc xem highlights — tổng hợp những pha đáng xem nhất trong vòng 10-15 phút.</p>
+                        </div>
+                    </details>
+
+                    <details class="bg-white/8 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden fade-up">
+                        <summary class="flex items-center justify-between cursor-pointer p-5 sm:p-6 gap-4 list-none">
+                            <span class="font-heading font-semibold text-sm sm:text-base pr-4">Có bình luận tiếng Việt không?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-white/50 flex-shrink-0 faq-chevron"></i>
+                        </summary>
+                        <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+                            <p class="text-white/70 text-sm leading-relaxed">Có nhiều kênh bình luận: tiếng Việt (với giọng đọc chuyên nghiệp và vui nhộn), tiếng Anh, và không bình luận. Bạn tự do chọn kênh phù hợp với sở thích.</p>
+                        </div>
+                    </details>
+
+                    <details class="bg-white/8 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden fade-up">
+                        <summary class="flex items-center justify-between cursor-pointer p-5 sm:p-6 gap-4 list-none">
+                            <span class="font-heading font-semibold text-sm sm:text-base pr-4">Xem trên điện thoại có được không?</span>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-white/50 flex-shrink-0 faq-chevron"></i>
+                        </summary>
+                        <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+                            <p class="text-white/70 text-sm leading-relaxed">Hoàn toàn được. Trang web được tối ưu cho mọi thiết bị — điện thoại Android/iOS, tablet, laptop và Smart TV. Không cần cài app, chỉ cần trình duyệt là xem được ngay.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ======================== 10. FOOTER ======================== -->
+    <footer class="bg-[#060e1a] border-t border-white/10">
+        <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-10">
+                <!-- Brand -->
+                <div>
+                    <a href="#" class="font-heading font-extrabold text-xl text-white mb-4 inline-flex items-center gap-2">
+                        <span class="text-2xl">🏆</span> World<span class="text-[#F4A261]">Cup</span>
+                    </a>
+                    <p class="text-white/50 text-sm leading-relaxed">Nền tảng xem World Cup 2026 miễn phí hàng đầu. Chất lượng cao, không quảng cáo, bình luận tiếng Việt.</p>
+                    <div class="flex items-center gap-2 mt-4">
+                        <span class="bg-[#20cb48]/20 text-[#20cb48] text-xs font-bold px-3 py-1 rounded-full">● Live Now: 3 trận</span>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-heading font-semibold text-sm text-white mb-4">Liên kết nhanh</h4>
+                    <ul class="space-y-2.5 text-white/50 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Lịch thi đấu</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Kết quả trận đấu</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Bảng xếp hạng</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Highlights</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Tin tức World Cup</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social -->
+                <div>
+                    <h4 class="font-heading font-semibold text-sm text-white mb-4">Kết nối</h4>
+                    <div class="flex gap-3">
+                        <a href="#" aria-label="Facebook" class="w-10 h-10 bg-white/8 border border-white/10 rounded-lg flex items-center justify-center hover:border-[#DF6B33] transition-colors">
+                            <i data-lucide="facebook" class="w-4 h-4 text-white/60"></i>
+                        </a>
+                        <a href="#" aria-label="YouTube" class="w-10 h-10 bg-white/8 border border-white/10 rounded-lg flex items-center justify-center hover:border-[#DF6B33] transition-colors">
+                            <i data-lucide="youtube" class="w-4 h-4 text-white/60"></i>
+                        </a>
+                        <a href="#" aria-label="Zalo" class="w-10 h-10 bg-white/8 border border-white/10 rounded-lg flex items-center justify-center hover:border-[#DF6B33] transition-colors">
+                            <i data-lucide="message-circle" class="w-4 h-4 text-white/60"></i>
+                        </a>
+                        <a href="#" aria-label="Telegram" class="w-10 h-10 bg-white/8 border border-white/10 rounded-lg flex items-center justify-center hover:border-[#DF6B33] transition-colors">
+                            <i data-lucide="send" class="w-4 h-4 text-white/60"></i>
+                        </a>
+                    </div>
+                    <div class="mt-5">
+                        <p class="text-white/50 text-xs mb-1">Hỗ trợ 24/7</p>
+                        <p class="text-white font-heading font-bold text-lg">📞 1900.xxxx</p>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="font-heading font-semibold text-sm text-white mb-4">Nhận thông báo trận đấu</h4>
+                    <p class="text-white/50 text-sm mb-4 leading-relaxed">Đăng ký nhận alert trước mỗi trận đấu yêu thích.</p>
+                    <form id="newsletterForm" class="flex flex-col gap-2" novalidate>
+                        <input type="email" id="nlEmail" placeholder="Email của bạn" required
+                            class="w-full bg-white/8 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-white/30 text-sm focus:outline-none focus:border-[#DF6B33] transition-colors">
+                        <button type="submit" class="btn-purple text-white font-semibold px-4 py-2.5 rounded-lg text-sm w-full">
+                            Đăng Ký Thông Báo
+                        </button>
+                    </form>
+                    <p id="nlSuccess" class="text-[#20cb48] text-xs mt-2 hidden">✓ Đăng ký thành công!</p>
+                    <p id="nlError" class="text-[#df0c34] text-xs mt-2 hidden">Email không hợp lệ.</p>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-white/10 text-center">
+                <p class="text-white/30 text-xs sm:text-sm">© 2026 WorldCup xem bóng đá miễn phí. Mọi nội dung chỉ mang tính chất giải trí.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let menuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('hidden', !menuOpen);
+            menuBtn.setAttribute('aria-expanded', menuOpen);
+            const icon = menuBtn.querySelector('i');
+            icon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu');
+            lucide.createIcons();
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                mobileMenu.classList.add('hidden');
+                menuBtn.setAttribute('aria-expanded', 'false');
+                const icon = menuBtn.querySelector('i');
+                icon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+
+        // 2. Navbar scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('nav-scrolled', window.scrollY > 50);
+        }, { passive: true });
+
+        // 3. Newsletter form
+        const nlForm = document.getElementById('newsletterForm');
+        const nlEmail = document.getElementById('nlEmail');
+        const nlSuccess = document.getElementById('nlSuccess');
+        const nlError = document.getElementById('nlError');
+
+        nlForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            nlSuccess.classList.add('hidden');
+            nlError.classList.add('hidden');
+            const val = nlEmail.value.trim();
+            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                nlSuccess.classList.remove('hidden');
+                nlEmail.value = '';
+            } else {
+                nlError.classList.remove('hidden');
+            }
+        });
+
+        nlEmail.addEventListener('input', () => {
+            nlSuccess.classList.add('hidden');
+            nlError.classList.add('hidden');
+        });
+
+        // 4. Counter animation
+        function animateCounters() {
+            document.querySelectorAll('.counter[data-target]').forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'), 10);
+                const suffix = counter.getAttribute('data-suffix') || '';
+                const duration = 2000;
+                const start = performance.now();
+
+                function update(now) {
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const current = Math.floor(eased * target);
+
+                    if (target >= 1000000) {
+                        counter.textContent = (current / 1000000).toFixed(1) + 'M' + suffix;
+                    } else {
+                        counter.textContent = current.toLocaleString('vi-VN') + suffix;
+                    }
+
+                    if (progress < 1) requestAnimationFrame(update);
+                    else counter.textContent = target.toLocaleString('vi-VN') + suffix;
+                }
+                requestAnimationFrame(update);
+            });
+        }
+
+        // 5. IntersectionObserver for fade-up and counters
+        const fadeEls = document.querySelectorAll('.fade-up');
+        let countersStarted = false;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (!countersStarted && entry.target.querySelector('.counter[data-target]')) {
+                        countersStarted = true;
+                        setTimeout(animateCounters, 300);
+                    }
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        fadeEls.forEach(el => observer.observe(el));
+
+        // Fallback counter observer
+        const counterEl = document.querySelector('.counter[data-target]');
+        if (counterEl) {
+            new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !countersStarted) {
+                    countersStarted = true;
+                    setTimeout(animateCounters, 300);
+                }
+            }, { threshold: 0.5 }).observe(counterEl);
+        }
+
+        // 6. Background slider
+        const slides = document.querySelectorAll('.bg-slide');
+        let currentSlide = 0;
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        setInterval(nextSlide, 5000);
+
+        // 7. Lucide icons init
+        lucide.createIcons();
+    </script>
+</body>
+</html>
