@@ -46,7 +46,7 @@
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #060e1a;
+            background-color: #0f1729;
             color: #FFFFFF;
             margin: 0;
         }
@@ -124,7 +124,16 @@
 
         .nav-scrolled {
             background: rgba(6, 14, 26, 0.97) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
             border-bottom-color: rgba(255,255,255,0.12) !important;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3) !important;
+        }
+
+        #navbar {
+            background: linear-gradient(to bottom, rgba(6,14,26,0.7), rgba(6,14,26,0));
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
         }
 
         .fade-up {
@@ -209,46 +218,51 @@
 
     <!-- Background Slider -->
     <div class="bg-slider" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&q=80&auto=format&fit=crop" alt="" class="bg-slide active">
-        <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1920&q=80&auto=format&fit=crop" alt="" class="bg-slide">
-        <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=1920&q=80&auto=format&fit=crop" alt="" class="bg-slide">
-        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1920&q=80&auto=format&fit=crop" alt="" class="bg-slide">
-        <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=1920&q=80&auto=format&fit=crop" alt="" class="bg-slide">
+        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&q=85&auto=format&fit=crop" alt="" class="bg-slide active">
+        <img src="https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=1920&q=85&auto=format&fit=crop" alt="" class="bg-slide">
+        <img src="https://images.unsplash.com/photo-1558584673-4c9a3028e2bb?w=1920&q=85&auto=format&fit=crop" alt="" class="bg-slide">
+        <img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=1920&q=85&auto=format&fit=crop" alt="" class="bg-slide">
+        <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=1920&q=85&auto=format&fit=crop" alt="" class="bg-slide">
         <!-- Overlay for readability -->
-        <div class="absolute inset-0 bg-black/55"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/50"></div>
     </div>
 
     <!-- ======================== 1. NAVIGATION ======================== -->
-    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: rgba(6, 14, 26, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <a href="#" class="font-heading font-extrabold text-[22px] text-white leading-none flex items-center gap-2">
                 <span class="text-2xl">🏆</span>
                 <span>World<span class="text-[#F4A261]">Cup</span></span>
             </a>
 
-            <div class="hidden md:flex items-center gap-8">
-                <a href="#schedule" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Lịch thi đấu</a>
-                <a href="#benefits" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Lợi ích</a>
-                <a href="#social-proof" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Đánh giá</a>
-                <a href="#faq" class="text-white/80 hover:text-white text-sm font-medium transition-colors">FAQ</a>
-                <a href="#cta" class="btn-primary text-white text-sm font-semibold px-5 py-2.5 rounded-lg">Xem Ngay</a>
-                <button id="openRegisterModal" class="btn-purple text-white text-sm font-semibold px-5 py-2.5 rounded-lg">Đăng Ký Tư Vấn</button>
+            <div class="hidden md:flex items-center gap-1">
+                <a href="#schedule" class="px-4 py-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 text-sm font-medium transition-all">Lịch thi đấu</a>
+                <a href="#benefits" class="px-4 py-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 text-sm font-medium transition-all">Lợi ích</a>
+                <a href="#social-proof" class="px-4 py-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 text-sm font-medium transition-all">Đánh giá</a>
+                <a href="#faq" class="px-4 py-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 text-sm font-medium transition-all">FAQ</a>
             </div>
 
-            <button id="menuBtn" class="md:hidden text-white p-2" aria-label="Mở menu" aria-expanded="false">
+            <div class="hidden md:flex items-center gap-3">
+                <a href="#cta" class="px-5 py-2.5 rounded-full border-2 border-white/30 text-white text-sm font-semibold hover:bg-white hover:text-[#060e1a] transition-all">Xem Ngay</a>
+                <button id="openRegisterModal" class="px-5 py-2.5 rounded-full text-white text-sm font-semibold transition-all" style="background: linear-gradient(135deg, #DF6B33, #F4A261);">Đăng Ký Tư Vấn</button>
+            </div>
+
+            <button id="menuBtn" class="md:hidden text-white p-2 bg-white/10 rounded-lg" aria-label="Mở menu" aria-expanded="false">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
 
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-[#060e1a]/97 backdrop-blur-md border-t border-white/10">
-            <div class="px-4 py-4 flex flex-col gap-4">
-                <a href="#schedule" class="text-white/80 hover:text-white text-sm font-medium py-2 transition-colors mobile-link">Lịch thi đấu</a>
-                <a href="#benefits" class="text-white/80 hover:text-white text-sm font-medium py-2 transition-colors mobile-link">Lợi ích</a>
-                <a href="#social-proof" class="text-white/80 hover:text-white text-sm font-medium py-2 transition-colors mobile-link">Đánh giá</a>
-                <a href="#faq" class="text-white/80 hover:text-white text-sm font-medium py-2 transition-colors mobile-link">FAQ</a>
-                <a href="#cta" class="btn-primary text-white text-sm font-semibold px-5 py-3 rounded-lg text-center mt-2 mobile-link">Xem Ngay</a>
-                <button id="openRegisterModalMobile" class="btn-purple text-white text-sm font-semibold px-5 py-3 rounded-lg text-center mt-2">Đăng Ký Tư Vấn</button>
+            <div class="px-4 py-4 flex flex-col gap-3">
+                <a href="#schedule" class="text-white/80 hover:text-white hover:bg-white/10 text-sm font-medium py-2.5 px-3 rounded-lg transition-all mobile-link">Lịch thi đấu</a>
+                <a href="#benefits" class="text-white/80 hover:text-white hover:bg-white/10 text-sm font-medium py-2.5 px-3 rounded-lg transition-all mobile-link">Lợi ích</a>
+                <a href="#social-proof" class="text-white/80 hover:text-white hover:bg-white/10 text-sm font-medium py-2.5 px-3 rounded-lg transition-all mobile-link">Đánh giá</a>
+                <a href="#faq" class="text-white/80 hover:text-white hover:bg-white/10 text-sm font-medium py-2.5 px-3 rounded-lg transition-all mobile-link">FAQ</a>
+                <div class="flex flex-col gap-2 mt-2 pt-3 border-t border-white/10">
+                    <a href="#cta" class="text-center px-4 py-3 rounded-full border-2 border-white/30 text-white text-sm font-semibold hover:bg-white hover:text-[#060e1a] transition-all mobile-link">Xem Ngay</a>
+                    <button id="openRegisterModalMobile" class="text-center px-4 py-3 rounded-full text-white text-sm font-semibold mobile-link" style="background: linear-gradient(135deg, #DF6B33, #F4A261);">Đăng Ký Tư Vấn</button>
+                </div>
             </div>
         </div>
     </header>
