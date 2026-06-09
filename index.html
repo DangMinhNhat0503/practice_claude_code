@@ -232,6 +232,7 @@
                 <a href="#social-proof" class="text-white/80 hover:text-white text-sm font-medium transition-colors">Đánh giá</a>
                 <a href="#faq" class="text-white/80 hover:text-white text-sm font-medium transition-colors">FAQ</a>
                 <a href="#cta" class="btn-primary text-white text-sm font-semibold px-5 py-2.5 rounded-lg">Xem Ngay</a>
+                <button id="openRegisterModal" class="btn-purple text-white text-sm font-semibold px-5 py-2.5 rounded-lg">Đăng Ký Tư Vấn</button>
             </div>
 
             <button id="menuBtn" class="md:hidden text-white p-2" aria-label="Mở menu" aria-expanded="false">
@@ -247,6 +248,7 @@
                 <a href="#social-proof" class="text-white/80 hover:text-white text-sm font-medium py-2 transition-colors mobile-link">Đánh giá</a>
                 <a href="#faq" class="text-white/80 hover:text-white text-sm font-medium py-2 transition-colors mobile-link">FAQ</a>
                 <a href="#cta" class="btn-primary text-white text-sm font-semibold px-5 py-3 rounded-lg text-center mt-2 mobile-link">Xem Ngay</a>
+                <button id="openRegisterModalMobile" class="btn-purple text-white text-sm font-semibold px-5 py-3 rounded-lg text-center mt-2">Đăng Ký Tư Vấn</button>
             </div>
         </div>
     </header>
@@ -750,6 +752,10 @@
                             <i data-lucide="calendar-days" class="w-5 h-5"></i>
                             Xem Lịch Thi Đấu
                         </a>
+                        <button id="openRegisterModalCta" class="btn-primary text-white font-bold px-8 py-4 rounded-lg inline-flex items-center justify-center gap-2 text-base">
+                            <i data-lucide="message-square" class="w-5 h-5"></i>
+                            Đăng Ký Tư Vấn
+                        </button>
                     </div>
 
                     <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60 fade-up">
@@ -1027,6 +1033,175 @@
 
         // 7. Lucide icons init
         lucide.createIcons();
+
+        // 8. Register Modal
+        document.addEventListener('DOMContentLoaded', () => {
+            const openModal = document.getElementById('openRegisterModal');
+            const openModalMobile = document.getElementById('openRegisterModalMobile');
+            const openModalCta = document.getElementById('openRegisterModalCta');
+            const registerModal = document.getElementById('registerModal');
+            const closeModal = document.getElementById('closeRegisterModal');
+            const registerForm = document.getElementById('registerForm');
+            const formSuccess = document.getElementById('formSuccess');
+
+            if (!registerModal) return;
+
+            const regName = document.getElementById('regName');
+            const regEmail = document.getElementById('regEmail');
+            const regPhone = document.getElementById('regPhone');
+            const regNameError = document.getElementById('regNameError');
+            const regEmailError = document.getElementById('regEmailError');
+            const regPhoneError = document.getElementById('regPhoneError');
+            const submitBtn = document.getElementById('submitBtn');
+
+            function setFieldError(input, errorEl, hasError) {
+                if (hasError) {
+                    input.classList.add('border-[#df0c34]');
+                    input.classList.remove('border-white/20');
+                    errorEl.classList.remove('hidden');
+                } else {
+                    input.classList.remove('border-[#df0c34]');
+                    input.classList.add('border-white/20');
+                    errorEl.classList.add('hidden');
+                }
+            }
+
+            function validateName() {
+                const val = regName.value.trim();
+                setFieldError(regName, regNameError, val.length < 2);
+                return val.length >= 2;
+            }
+
+            function validateEmail() {
+                const val = regEmail.value.trim();
+                const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val);
+                setFieldError(regEmail, regEmailError, !ok);
+                return ok;
+            }
+
+            function validatePhone() {
+                const val = regPhone.value.trim().replace(/\s+/g, '');
+                const ok = /^0[0-9]{9,10}$/.test(val);
+                setFieldError(regPhone, regPhoneError, !ok);
+                return ok;
+            }
+
+            regName.addEventListener('input', () => setFieldError(regName, regNameError, false));
+            regEmail.addEventListener('input', () => setFieldError(regEmail, regEmailError, false));
+            regPhone.addEventListener('input', () => setFieldError(regPhone, regPhoneError, false));
+
+            function openRegisterModal() {
+                registerModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                lucide.createIcons();
+            }
+
+            function closeRegisterModal() {
+                registerModal.classList.add('hidden');
+                document.body.style.overflow = '';
+                registerForm.reset();
+                registerForm.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+                submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Gửi Đăng Ký';
+                [regName, regEmail, regPhone].forEach(input => {
+                    input.classList.remove('border-[#df0c34]');
+                    input.classList.add('border-white/20');
+                });
+                [regNameError, regEmailError, regPhoneError].forEach(el => el.classList.add('hidden'));
+                formSuccess.classList.add('hidden');
+            }
+
+            if (openModal) openModal.addEventListener('click', openRegisterModal);
+            if (openModalMobile) openModalMobile.addEventListener('click', openRegisterModal);
+            if (openModalCta) openModalCta.addEventListener('click', openRegisterModal);
+            if (closeModal) closeModal.addEventListener('click', closeRegisterModal);
+
+            registerModal.addEventListener('click', (e) => {
+                if (e.target === registerModal) closeRegisterModal();
+            });
+
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const nameOk = validateName();
+                const emailOk = validateEmail();
+                const phoneOk = validatePhone();
+                if (!nameOk || !emailOk || !phoneOk) return;
+
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+                submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Đang gửi...';
+                lucide.createIcons();
+
+                setTimeout(() => {
+                    formSuccess.classList.remove('hidden');
+                    registerForm.classList.add('hidden');
+                }, 800);
+            });
+        });
     </script>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+
+        <!-- Modal Content -->
+        <div class="relative bg-[#0d1b2a] border border-white/15 rounded-2xl w-full max-w-md p-6 sm:p-8 shadow-2xl shadow-purple-accent/20">
+            <!-- Close Button -->
+            <button id="closeRegisterModal" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors p-1">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="text-center mb-6">
+                <div class="text-4xl mb-3">📋</div>
+                <h2 class="font-heading font-extrabold text-xl sm:text-2xl text-white mb-2">Đăng Ký Tư Vấn</h2>
+                <p class="text-white/50 text-sm">Để lại thông tin, chúng tôi sẽ liên hệ bạn sớm nhất</p>
+            </div>
+
+            <!-- Form -->
+            <form id="registerForm" class="space-y-4" novalidate>
+                <div>
+                    <label for="regName" class="block text-white/70 text-sm font-medium mb-1.5">Họ và tên <span class="text-[#df0c34]">*</span></label>
+                    <input type="text" id="regName" name="name" required placeholder="Nguyễn Văn A" autocomplete="name"
+                        class="w-full bg-[#1a2a3a] border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 text-sm focus:outline-none focus:border-[#ba14d7] transition-colors">
+                    <p id="regNameError" class="hidden text-[#df0c34] text-xs mt-1.5">Vui lòng nhập họ và tên (ít nhất 2 ký tự)</p>
+                </div>
+
+                <div>
+                    <label for="regEmail" class="block text-white/70 text-sm font-medium mb-1.5">Email <span class="text-[#df0c34]">*</span></label>
+                    <input type="email" id="regEmail" name="email" required placeholder="email@example.com" autocomplete="email"
+                        class="w-full bg-[#1a2a3a] border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 text-sm focus:outline-none focus:border-[#ba14d7] transition-colors">
+                    <p id="regEmailError" class="hidden text-[#df0c34] text-xs mt-1.5">Email không hợp lệ (vd: email@example.com)</p>
+                </div>
+
+                <div>
+                    <label for="regPhone" class="block text-white/70 text-sm font-medium mb-1.5">Số điện thoại <span class="text-[#df0c34]">*</span></label>
+                    <input type="tel" id="regPhone" name="phone" required placeholder="0901 xxx xxx" autocomplete="tel"
+                        class="w-full bg-[#1a2a3a] border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 text-sm focus:outline-none focus:border-[#ba14d7] transition-colors">
+                    <p id="regPhoneError" class="hidden text-[#df0c34] text-xs mt-1.5">Số điện thoại không hợp lệ (10–11 số, bắt đầu bằng 0)</p>
+                </div>
+
+                <div>
+                    <label for="regContent" class="block text-white/70 text-sm font-medium mb-1.5">Nội dung cần tư vấn</label>
+                    <textarea id="regContent" name="content" rows="3" placeholder="Ví dụ: Tôi muốn biết cách xem các trận đấu World Cup..."
+                        class="w-full bg-[#1a2a3a] border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 text-sm focus:outline-none focus:border-[#ba14d7] transition-colors resize-none"></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full btn-purple text-white font-bold py-3.5 rounded-lg text-sm flex items-center justify-center gap-2 mt-2">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                    Gửi Đăng Ký
+                </button>
+            </form>
+
+            <!-- Success Message -->
+            <div id="formSuccess" class="hidden text-center py-6">
+                <div class="text-5xl mb-3">🎉</div>
+                <h3 class="font-heading font-bold text-lg text-white mb-1">Đăng ký thành công!</h3>
+                <p class="text-white/50 text-sm">Chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất.</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
