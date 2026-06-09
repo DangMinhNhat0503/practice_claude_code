@@ -1157,7 +1157,7 @@
                     serviceName: 'World Cup 2026 - Tư vấn'
                 };
 
-                fetch('/api/leads', {
+                fetch('http://localhost:3000/api/leads', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
