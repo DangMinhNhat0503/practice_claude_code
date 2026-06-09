@@ -1118,12 +1118,15 @@
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
                 submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Gửi Đăng Ký';
+                lucide.createIcons();
                 [regName, regEmail, regPhone].forEach(input => {
                     input.classList.remove('border-[#df0c34]');
                     input.classList.add('border-white/20');
                 });
                 [regNameError, regEmailError, regPhoneError].forEach(el => el.classList.add('hidden'));
                 formSuccess.classList.add('hidden');
+                const errEl = document.getElementById('submitError');
+                if (errEl) errEl.classList.add('hidden');
             }
 
             if (openModal) openModal.addEventListener('click', openRegisterModal);
@@ -1147,10 +1150,41 @@
                 submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Đang gửi...';
                 lucide.createIcons();
 
-                setTimeout(() => {
+                const payload = {
+                    fullName: regName.value.trim(),
+                    email: regEmail.value.trim(),
+                    phoneNumber: regPhone.value.trim().replace(/\s+/g, ''),
+                    serviceName: 'World Cup 2026 - Tư vấn'
+                };
+
+                fetch('/api/leads', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error('Server error');
+                    return res.json();
+                })
+                .then(() => {
                     formSuccess.classList.remove('hidden');
                     registerForm.classList.add('hidden');
-                }, 800);
+                })
+                .catch(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+                    submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Gửi Đăng Ký';
+                    lucide.createIcons();
+                    const errEl = document.getElementById('submitError') || (() => {
+                        const el = document.createElement('p');
+                        el.id = 'submitError';
+                        el.className = 'text-[#df0c34] text-xs mt-3 text-center';
+                        el.textContent = 'Gửi thất bại. Vui lòng thử lại.';
+                        submitBtn.after(el);
+                        return el;
+                    })();
+                    errEl.classList.remove('hidden');
+                });
             });
         });
     </script>
